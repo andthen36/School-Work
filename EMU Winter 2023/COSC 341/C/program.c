@@ -82,8 +82,7 @@ void process_scores(){
     
 }
 double compute_tax(int income, char *status, char state){
-
-    
+      
 }
 int quadratic(double a, double b, double c, double *solution1, double *solution2){
 
@@ -122,6 +121,17 @@ int main(){
         case 3:
         case 4:
         case 5:
+            int income;
+            char[5] status;
+            char[5] state;
+            double tax;
+            printf("Please enter your income amount\n");
+            scanf("%d\n", income);
+            printf("Please enter your marital status: S for Single or M for Married\n");
+            scanf("%c\n", status);
+            printf("Please enter your state status: In for 'in' State or Out for 'out' of State\n");
+            scanf("%c\n", state);
+            tax = compute_tax(income, status, state);
         case 6:
         case 7:
         case 8:
