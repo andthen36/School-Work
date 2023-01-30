@@ -1,0 +1,284 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 brown
+\f1 \cf2 \expnd0\expndtw0\kerning0
+\'97 Chapter 3\
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+-- Retreiving data form a single table\
+\
+/* The four clauses of the SELECT statement\
+	\'95	SELECT\
+	\'95	FROM\
+	\'95	WHERE\
+	\'95	ORDER BY\
+*/\
+\
+\
+Select *\
+from City\
+\
+\
+--    A SELECT statement that retrieves and sorts rows\
+\
+Select *\
+from City\
+order by age		--  ASC vs DESC\
+\
+\
+--	A SELECT statement that retrieves a calculated value\
+\
+Select firstname, age, age+4 AS NewAge  =====> talk about aliesing -AS- VS ""\
+from city\
+\
+--		A SELECT statement that retrieves all names between given age\
+\
+Select ID,FirstName, LastName, Age\
+from City\
+where age between 20 and 25\
+\
+Order by Age\
+\
+\
+--	Concatination\
+\
+Select *\
+from city\
+\
+-- Create a full name column\
+\
+select Id, FirstName + ' ' + LastName AS FullName, email, age, city, state\
+from city\
+\
+\
+-- Create an address column\
+\
+select Id, FirstName, LastName, email, age, city + ', ' + state AS Address\
+from city\
+\
+-- Create apostrophes\
+\
+Select FirstName + ' ' + LastName +'''s Address: ' AS FullName, city + ', ' + state AS Address\
+from City\
+\
+\
+--	A function is used to calculate CurrentDate\
+\
+select getdate()\
+\
+select *, getdate()\
+from city\
+\
+\
+\
+\
+/*\
+\
+The arithmetic operators in order of precedence\
+	\
+	*	Multiplication\
+	/	Division\
+	%	Modulo (Remainder)\
+	+	Addition\
+	-	Subtraction\
+\
+*/\
+\
+--	A SELECT statement that uses parentheses to control the sequence of operations\
+\
+Select *\
+from city\
+\
+Select Age, Age + 2 * 3 AS OrderOFPrecedence, \
+	   (Age + 2) * 3 AS ParanthesesFirst,\
+	   age / 2 AS Quotient,\
+	   Age % 2 AS Remainder\
+from city\
+\
+\
+\
+--	A SELECT statement that uses the LEFT function ====> Syntax: LEFT(Expression, count)\
+	--													Expression: Any character string\
+	--											    	Count: The count of characters that will be returend\
+\
+\
+Select firstname, lastname, LEFT(firstname, 1) +'.'+ LEFT(lastname, 1) AS Initials\
+From City\
+\
+\
+--	Convert() Function\
+\
+--	The CONVERT() function converts an expression of one data type to another.\
+\
+--	The CONVERT() function can be used to display date/time data in different formats.\
+\
+--	Syntax:  CONVERT(data_type(length),expression,style) =====> 3 Parameters \
+\
+--	data_type(length): 	Specifies the target data type (with an optional length)\
+--	expression 		 :	Specifies the value to be converted\
+--	style 			 :	Specifies the output format for the date/time\
+\
+--	The following script uses the CONVERT() function to display different formats. \
+--	We will use the GETDATE() function to get the current date/time:\
+\
+\
+Select CONVERT(varchar(20),getdate())	  AS 'Default Style'--============> default mon dd yyyy hh:miAM (or PM)\
+Select CONVERT(VARCHAR(20),GETDATE(),101) AS 'Style 101'	--============> mm/dd/yyyy US\
+Select CONVERT(VARCHAR(10),GETDATE(),10)  AS 'Style 10'		--============> mm-dd-yy\
+Select CONVERT(VARCHAR(10),GETDATE(),110) AS 'Style 110'	--============> mm-dd-yyyy\
+Select CONVERT(VARCHAR(11),GETDATE(),6)	  AS 'Style 6'	    --============> dd mon yy\
+Select CONVERT(VARCHAR(11),GETDATE(),106) AS 'Style 106'	--============> dd mon yyyy\
+Select CONVERT(VARCHAR(24),GETDATE(),113) AS 'Style 113'	--============> dd mon yyyy hh:mi:ss:mmm (24h)\
+\
+--NOTE: Length is OPTIONAL SO they all can be written without cabing the size\
+\
+Select CONVERT(varchar,getdate())	  AS 'Default Style'--============> default mon dd yyyy hh:miAM (or PM)\
+Select CONVERT(VARCHAR,GETDATE(),101) AS 'Style 101'	--============> mm/dd/yyyy US\
+Select CONVERT(VARCHAR,GETDATE(),10)  AS 'Style 10'		--============> mm-dd-yy\
+Select CONVERT(VARCHAR,GETDATE(),110) AS 'Style 110'	--============> mm-dd-yyyy\
+Select CONVERT(VARCHAR,GETDATE(),6)	  AS 'Style 6'	    --============> dd mon yy\
+Select CONVERT(VARCHAR,GETDATE(),106) AS 'Style 106'	--============> dd mon yyyy\
+Select CONVERT(VARCHAR,GETDATE(),113) AS 'Style 113'	--============> dd mon yyyy hh:mi:ss:mmm (24h)\
+\
+\
+--	DATEDIFF() Function\
+-- Get the difference between 2 dates.	\
+\
+--	Syntax: DATEDIFF(datepart,startdate,enddate) ------> uses 3 parameters\
+\
+SELECT DATEDIFF(year, '2012/09/22', '2014/09/22') AS '#ofYears'\
+SELECT DATEDIFF(yyyy, '2012/09/22', '2014/09/22') AS '#ofYears'\
+SELECT DATEDIFF(yy, '2012/09/22', '2014/09/22') AS	'#ofYears'\
+SELECT DATEDIFF(MONTH, '2013/06/22', '2014/09/22') AS '#ofMonths'\
+SELECT DATEDIFF(DAY, '2014/08/01', '2014/09/22') AS '#ofDays'\
+SELECT DATEDIFF(HOUR, '2014/09/22 06:00', '2014/09/22 07:15') AS '#ofHrs'\
+SELECT DATEDIFF(MINUTE, '2014/09/22 06:00', '2014/09/22 07:15') AS '#ofMinutes'\
+\
+\
+--	A SELECT statement that eliminates duplicate rows\
+\
+Select *\
+From City\
+\
+Select distinct (state)\
+from City\
+\
+\
+--	A SELECT statement with a TOP clause\
+\
+Select top 3 *\
+from City\
+\
+\
+/*\
+	Operators and Wild cards\
+	\'95	=\
+	\'95	>\
+	\'95	<\
+	\'95	<=\
+	\'95	>=\
+	\'95	<> or !=\
+	\'95	IN\
+	\'95	Between\
+	\'95	Like\
+	\'95	Not\
+	\'95	%\
+	\'95	_\
+	\'95	[]\
+	\'95	[^]\
+*/\
+\
+\
+--			IN\
+\
+ select all the ppl who\'92s ages are 20, 23, 29. \
+Where age = 20, where age = 23 where age =29\
+\
+ Select *\
+ From City \
+ Where age = 20 OR age = 23 OR age =29\
+\
+\
+	VS	IN operator\
+\
+ --use the IN operator with specifying a list of values. \
+\
+Select *\
+From City\
+Where age  IN (20, 23, 29)\
+\
+\
+--		Between\
+\
+ --use the Between operator when specifying a rang, so the query will be as follow\
+\
+Select *\
+From City\
+Where age between 20 and 25\
+\
+NOTE: The 20 and the 25 are inclusive.\
+\
+\
+--		Like Operator\
+\
+--Like operator is used when specifying a pattern.\
+\
+\
+Select *\
+From City\
+Where State Like 'M%'\
+\
+\
+--list all the valid email addresses. \
+\
+\
+Select *\
+From City\
+Where Email Like '%@%'\
+\
+\
+ --		_\
+\
+-- the (_) it\'92s substitute for 1 character.\
+--list the emails that has 1 character before and after the @\
+\
+ Select *\
+From City\
+Where Email Like '_@_.com'\
+\
+You get 2 rows\
+\
+\
+\
+--			[] square brackets ========>   to specify a list of characters.\
+--list all  ppl who\'92s name start with specific characters. \
+\
+ \
+Select *\
+From City\
+Where FirstName like '[msl]%'\
+\
+\
+--list of ppl that the names doesn\'92t start with m, s, L, you use [^]\
+\
+Select *\
+From City\
+Where FirstName like '[^msl]%'\
+\
+You will get 2 rows back\
+\
+\
+--		Joining multiple conditions\
+\
+\
+list all ppl twhos lives in MI or FL and their age is greater than 25\
+\
+Select *\
+From City\
+Where (State = 'Michigan' or State = 'Florida') and age > 25\
+}

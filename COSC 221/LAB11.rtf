@@ -1,0 +1,79 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2706
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww17560\viewh14780\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 .ORIG x3000;\
+LD R3 ASCII; Load R3 ASCII\
+LEA R0, USER_STRING;\
+PUTS;\
+GETC;\
+ST R0, AMOUNT\
+JSR isDigit\
+LD R0, ORIGINAL;\
+LD R1, ORIGINAL;\
+LD R2, AMOUNT;\
+LOOP AND R1,R1, #0;\
+ADD R1,R0,#0;\
+BRzp #3;\
+ADD R0, R0, R0;\
+ADD R0, R0, #1;\
+BRnzp #1;\
+ADD R0, R0, R0;\
+ADD R2, R2, #-1;\
+BRn #1;\
+BRp LOOP;\
+ST R0, ROTATED;\
+DONE HALT;\
+ORIGINAL .FILL #61455;\
+AMOUNT .FILL #5;\
+ROTATED .FILL #0;\
+ASCII .FILL #-48\
+Invalid_Input\
+  LD R0, NEWLINE\
+  OUT\
+  LD R0, IN_CHAR\
+  OUT\
+  LEA R0, INVALID_MSG\
+  PUTS\
+  LD R0, NEWLINE\
+  OUT\
+  BR BEGIN\
+BRn Invalid_Input\
+  JSR AtoI\
+DONE\
+  HALT\
+AtoI\
+   ST R7, SaveR7AtoI\
+   ;AND R4, R0, #15\
+   LD R4, NFortyEight\
+   ADD R4, R0, R4\
+   LD R7, SaveR7AtoI\
+   RET\
+SaveR7AtoI .blkw #1\
+NFortyEight .fill #-48\
+isDigit\
+  ST R7, SaveR7isDigit\
+  ST R1, SaveR1isDigit\
+  AND R5, R5, #0  ; intialize R5 = 0\
+  LD R1, NZero\
+  ADD R1, R0, R1\
+  BRn BAD\
+  LD R1, NNine\
+  ADD R1, R0, R1\
+  BRp BAD\
+  BR DONE_isDigit\
+BAD\
+  ADD R5, R5, #-1\
+DONE_isDigit\
+  LD R1, SaveR1isDigit\
+  LD R7, SaveR7isDigit\
+  RET\
+SaveR7isDigit .blkw #1\
+SaveR1isDigit .blkw #1\
+NZero .fill #-48\
+NNine .fill #-57\
+USER_STRING . STRINGZ \'93Input a number 0-9\'94;\
+.END}

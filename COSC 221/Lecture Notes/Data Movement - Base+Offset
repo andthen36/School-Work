@@ -1,0 +1,44 @@
+COSC 221: Computer Organization I
+
+Using LC-3 ML Data Movement Instructions: Base+offset Addressing Mode
+
+Example Problem #1:  Copy the contents of memory address x3050 into register R3. Assume the instruction is loaded in address x3000.
+
+0011 0000 0000 0000 ; start at x3000
+
+1110 000 0 0100 1111 ; R0 = x3050
+0110 011 000 000000 ;  R3 = [R0 + 0] = [x3050 + 0] = [x3050]
+
+2nd solution:
+0011 0000 0000 0000 ; start at x3000
+
+1110 000 0 0011 1111 ; R0 = x3040
+0110 011 000 010000 ;  R3 = [R0 + 0] = [x3040 + x010] = [x3050]
+
+Example Problem #2: Store the contents of register R5 into memory address x30EE. Assume the instruction is loaded in address x3100.
+
+0011 0001 0000 0000		; starting address x3100
+1110 001 1 1110 1101  ; BaseR R1 = x30EE
+0111 101 001 000000   ; [R1 + 0] = [x30EE] = R5
+
+Example Problem #3: Using base+offset addressing, add the contents stored in memory addresses x30F1 and x30F2 and store the result in address x30F3. Assume the code is loaded into address x3000.
+
+0011 0000 0000 0000 ; start at x3000
+
+1110 011 0 1111 0000  ; R3 = x30F1
+0110 000 011 000000   ; R0 = [R3 + 0] = [x30F1]
+0110 001 011 000001   ; R1 = [R3 + 1] = [x30F2]
+0001 010 000 0 00 001 ; R2 = R0 + R1
+0111 010 011 000010   ; [x30F3] = [R3 + 2] = R2
+
+Data:
+30F1
+0003
+0004
+
+
+3050 
+0012
+0023
+0034
+0045

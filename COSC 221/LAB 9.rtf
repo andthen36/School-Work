@@ -1,0 +1,20 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2706
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww14200\viewh14760\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 0011 0000 0000 0000; X3000\
+0010 001 0 11111 110;  LD R1, X30FF \
+0101 000 001 1 00001; AND R0, R1, #1\
+0000 001 000000010;  BRp X3005 \
+0001 001 001 1 10110;ADD R1, R1, #-10	\
+0000 111 000000001;  BRnzp X3006	\
+0001 001 001 1 01010; ADD R1, R1, #10  \
+0000 001 011111000; BRp X30FF		\
+0101 001 001 1 00000; AND R1 R1 #0\
+0000 011 000000010; BRzp x300B\
+0101 011 011 1 11110; AND R3 R3 #-1\
+0011 011 011110101; ST R3 X3100\
+0011 001 0 1111 0011; ST R1, X30FF}

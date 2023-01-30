@@ -1,0 +1,30 @@
+; Assembly programming
+
+.orig x3000    ;0011 0000 0000 0000 ; start at x3000
+
+  NOT R1, R0
+  ADD R2, R2, #-10
+
+  LD R0, x
+  LD R1, y
+  ADD R2, R0, R1
+  ST R2, z
+
+  AND R1, R1, #-1
+  BRn ADD5
+  BR DONE
+ADD5
+  ADD R2, R2, #5
+DONE    HALT
+
+x .fill #5
+y .fill #4
+z .blkw #1
+ARRAY .blkw #4
+NAME .stringz "George"
+ADDRESS1 .fill x30F1
+ADDRESS2 .fill x30F2
+ADDRESS3 .fill x30F3
+
+
+.end

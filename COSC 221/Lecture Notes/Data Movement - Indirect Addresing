@@ -1,0 +1,59 @@
+Using LC-3 ML Data Movement Instructions: Indirect Addressing Mode
+
+
+Example Problem #1:  Copy the contents of memory address x3050 into register R3. Assume that memory address x3020 contains the value x3050 and the instruction is loaded in address x3000.
+
+0011 0000 0000 0000 ; start at x3000
+
+1010 011 0 0001 1111   ; R3 = [[x3020]] = [x3050] = 25
+
+Target = x3020
+- PC+1 = x3001
+==============
+       = x001F
+
+
+
+Example Problem #2: Store the contents of register R5 into memory address x30EE. Assume that memory address x30EF contains the value x30EE and the instruction is loaded in address x3100.
+
+0011 0001 0000 0000 ; start at x3100
+1011 101  1 1110 1110 ; [[x30EF]] = [x30EE] = R5
+
+Target = x30EF
+-PC+1  = x3101
+===============
+       = xFFEE
+
+Example Problem #3: Using indirect addressing Add the contents stored in memory addresses x30F1 and x30F2 and store the result in address x30F3. Assume the code is loaded into address x3000. Also, assume addresses x30F1, x30F2, and x30F3 are stored in addresses x30FF, x3100, and x3101, respectively.
+
+0011 0000 0000 0000 ; start at x3000
+1010 000 0 1111 1110  ;x3000  R0 = [[x30FF]] = [x30F1]
+1010 001 0 1111 1110  ; x3001 R1 = [[x3100]] = [x30F2]
+0001 010 000 0 00 001 ; x3002 R2 = R0 + R1
+1011 010 0 1111 1101  ; x3003 [[x3101]] = [x30F3] = R2
+
+
+Target = x30FF
+- PC+1 = x3001
+===============
+       = x00FE
+
+Target = x3100
+- PC+1 = x3002
+===============
+       = x00FE
+
+Target = x3101
+- PC+1 = x3004
+===============
+       = x00FD
+
+Data:
+30FF
+30F1
+30F2
+30f3
+
+30F1
+0012
+0034

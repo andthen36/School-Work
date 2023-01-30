@@ -1,0 +1,48 @@
+COSC 221: Computer Organization I
+
+Using LC-3 ML Control instructions - Branch
+
+Example Problem#1: Add 5 to R2 if R1 contains a negative value.
+if (R1 < 0)
+  R2 +=5;
+Solution 1:
+0011 0000 0000 0000 ; start at x3000
+0101 001 001 1 11111  ; x3000 set N CC based on R1
+0000 100 0 0000 0001  ; x3001 BRn to R2+=5     Target = x3003
+                      ;              - PC+1  = x3002
+                      ;                =============
+                      ;                      = x0001
+
+
+0000 111 0 0000 0001    ;x3002  goto x3004
+0001 010 010 1 00101  ;x3003  R2 += 5
+  ;x3004  done
+
+
+Solution 2:
+0011 0000 0000 0000 ; start at x3000
+0101 001 001 1 11111  ; x3000 set N CC based on R1
+0000 011 0 0000 0001   ; x3001 BRzp to done x3003
+0001 010 010 1 00101  ;x3002  R2 += 5
+  ; x3003 done
+
+
+
+
+Example Problem#2: If R4 is less than R5, store R4 in x31FF. Otherwise, store R4 in x31FE. Assume code starts at x3200.
+if (R4 < R5)     R4 - R5 < 0
+  [x31FF] = R4
+else
+  [x31FE] = R4
+
+Solution#1:
+EC +2pts Due 11:59pm 10/27
+
+
+
+
+
+
+
+
+ Example Problem#3: Add 1 to R2 if R1 contains an odd number. Otherwise, subtract 1 from R2. Store R2 in address x30FF. Load program at address x3100.

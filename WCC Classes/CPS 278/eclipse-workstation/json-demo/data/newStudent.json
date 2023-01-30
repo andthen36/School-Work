@@ -1,0 +1,12 @@
+{
+  "id" : 1,
+  "firstName" : "Evan",
+  "lastName" : "Meyer",
+  "active" : true,
+  "address" : {
+    "street" : "4800 E Huron River dr",
+    "city" : "Ann Arbor",
+    "zip" : "48105"
+  },
+  "courseList" : [ "CPS261", "CIS282" ]
+}

@@ -1,0 +1,25 @@
+COSC 221: Computer Organization I
+
+Using LC-3 ML Data Movement Instructions: PC-Relative Addressing Mode
+
+Example Problem #1:  Copy the contents of memory address x3050 into register R3.
+Assume the instruction is loaded in address x3000.
+
+0011 0000 0000 0000		; starting address x3000
+0010 011 0 0100 1111  ; x3000 R3 = [x3050]
+
+
+Example Problem #2: Store the contents of register R5 into memory address x30EE. Assume the instruction is loaded in address x3100.
+
+0011 0001 0000 0000		; starting address x3100
+0011 101 1 1110 1101  ; [x30EE] = R5
+
+
+Example Problem #3: Add the contents stored in memory addresses x30F1 and x30F2 and store the result in address x30F3. Assume the code is loaded into address x3000.
+
+0011 0000 0000 0000		; starting address
+
+0010 000 0 1111 0000	;x3000 load [x30f1] into R0
+0010 001 0 1111 0000	;x3001 load [x30f2] into R1
+0001 010 000 0 00 001	;x3002 R2 = R0 + R1
+0011 010 0 1110 1111	;x3003 store R2 into [x30f3]
