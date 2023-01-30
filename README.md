@@ -13,7 +13,7 @@ Eastern:
   Fall 2022:
     COSC 221 - Machine language
     
-  Winter 2023:\m
+  Winter 2023:
     COSC 341: Programming Languages
     COSC 311: Algorithmic toolbox
     
