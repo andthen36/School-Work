@@ -78,13 +78,11 @@ void process_scores(){
     int i = 0;
     printf("Please enter a students name and score (type q to quit)");
     scanf("%c, %d", name, score);
-    student_names[i] = name;
     strcpy(student_names, name);
     i = strlen(name);
     
 }
 double compute_tax(int income, char *status, char state){
-    
     double tax;
     if(state == "in"){
         if (*status == "s")
