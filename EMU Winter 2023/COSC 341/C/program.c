@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 int compute_pi(int n){
     int i = 0;
     int bool = 0;
@@ -78,11 +79,62 @@ void process_scores(){
     printf("Please enter a students name and score (type q to quit)");
     scanf("%c, %d", name, score);
     student_names[i] = name;
+    strcpy(student_names, name);
     i = strlen(name);
     
 }
 double compute_tax(int income, char *status, char state){
-
+    
+    double tax;
+    if(state == "in"){
+        if (*status == "s")
+            {
+            if (income < 40000)
+            {
+                tax = income/0.3;
+            }
+            if (income >= 40000)
+            {
+                tax = income/0.35;
+            }
+        }
+        if (*status == "m")
+            {
+            if (income < 60000)
+            {
+                tax = income/0.2;
+            }
+            if (income >= 60000)
+            {
+                tax = income/0.25;
+            }
+        }
+    }
+    if (state == "out"){
+        if (*status == "s")
+            {
+            if (income < 40000)
+            {
+                tax = income/0.27;
+            }
+            if (income >= 40000)
+            {
+                tax = income/0.32;
+            }
+        }
+        if (*status == "m")
+            {
+             if (income < 60000)
+            {
+                tax = income/0.17;
+            }
+            if (income >= 60000)
+            {
+                tax = income/0.22;
+            }
+        }
+    }
+    return tax;
 }
 int quadratic(double a, double b, double c, double *solution1, double *solution2){
 
@@ -91,6 +143,31 @@ int sum_squares(int n){
 
 }
 void file_count(char *file, int *characters, int *blanks, int *lines){
+    FILE *fp;
+    char ch;
+    fp = fopen(*file, "r");
+    while(1){
+        ch = fgetc(fp);
+        if (ch == isalpha)
+        {
+            *characters++;
+        }
+        if (ch == isspace)
+        {
+            *blanks++;
+        }
+        if (ch == "\n")
+        {
+            *lines++;
+        }
+        if (ch == EOF)
+        {
+            *lines++;
+            break;
+        }
+    }
+    return 0;
+    fclose(fp);
 
 }
 void file_sort(char *infile, char *outfile){
@@ -121,17 +198,6 @@ int main(){
         case 3:
         case 4:
         case 5:
-            int income;
-            char[5] status;
-            char[5] state;
-            double tax;
-            printf("Please enter your income amount\n");
-            scanf("%d\n", income);
-            printf("Please enter your marital status: S for Single or M for Married\n");
-            scanf("%c\n", status);
-            printf("Please enter your state status: 'in' for In-State or 'out' for Out-of-State\n");
-            scanf("%c\n", state);
-            tax = compute_tax(income, status, state);
         case 6:
         case 7:
         case 8:
