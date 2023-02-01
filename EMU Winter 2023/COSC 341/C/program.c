@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
 int compute_pi(int n){
     int i = 0;
     int bool = 0;
@@ -10,18 +11,17 @@ int compute_pi(int n){
         printf("%f , i = %d ||", pi, i );
         if(bool == 0){
             pi = (pi + (1/ph));
-            ph + 2;
+            ph = ph + 2;
             i++;
             bool = 1;
 
         }
         if(bool == 1){
             pi = (pi - (1/ph));
-            ph + 2;
+            ph = ph + 2;
             i++;
             bool = 0;
         }
-        
     }
     return 4 * pi;
 }
@@ -164,47 +164,65 @@ void file_count(char *file, int *characters, int *blanks, int *lines){
             break;
         }
     }
-    return 0;
     fclose(fp);
 
 }
 void file_sort(char *infile, char *outfile){
+    char names[20][50];
+    int student_id[50];
+    double gpa[50];
+    int count, i;
+    char temp;
+    char name [20];
+    int blank;
+    FILE *fp;
+    fp = fopen(*infile, "r");
+    count = fgetc(fp);
+    while(fp != EOF){
+        temp = fgetc(fp);
+        if (temp == isalpha)
+        {
+            strcpy(name, temp);
+        }
+        if (temp == isblank)
+        {
+            blank++;
+        }
+        
+        if (temp == isdigit && blank == 1)
+        {
+            student_id[i] = temp;
+        }
+        if (temp == isdigit && blank == 2)
+        {
+            gpa[i] = temp;
+        }
+        if (temp == '\n')
+        {
+            i++;
+        }
+    }
 
 }
 void file_student(char *infile){
 
 }
 int main(){
-    int choice = 0;
-    int bool = 0;
+    int choice;
+    int bool;
     printf("Please choose which fuction you would like to use:\n1: Computing Pi\n2: Computing Square\n3: Displaying Primes\n4: Processing Grades\n5: Computing tax\n6: Solving Quadratic\n7: Computing Sum Square\n8: Counting Files\n9: Sorting Files\n10: Student Files\n11: Quit\n");
     scanf("%d",choice);
-    switch (choice)
+    if (choice == 1)
     {
-        case 1:
-            int n;
-            long sqr;
+        int n;
+            double sqr;
             int choice;
             printf("Enter in a number you would like to square");
             scanf("%d",n);
             sqr = compute_pi(n);
             printf("The pi of %d is; %f", n, sqr);
-            printf("Would you like to go back to the menu?\n1:Yes 2:No");
-            scanf("%d",choice);
-            break;
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-        case 10:
-        case 11:
-            break;
-        default:
-            printf("Invalid Option)");
-    }
-    printf("Thank you for using 'program.c' :)");
+    }else
+            printf("Thank you for using 'program.c' :)");
+
 }
+   
