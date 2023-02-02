@@ -80,7 +80,7 @@ void process_scores(){
     int i = 0;
     printf("Please enter a students name and score (type q to quit)");
     scanf("%c, %d", name, score);
-    while (name = 'q' || 'Q'){
+    while (name == 'q' || name == 'Q'){
         stpcpy(student_names[i], name);
         student_score[i] = score;
         i++;
@@ -232,9 +232,10 @@ void file_sort(char *infile, char *outfile){
         if (temp == '\n')
         {
             i++;
+            blank = 0;
+            strcpy(student_names[i], name);
         }
-        blank = 0;
-        strcpy(student_names[i], name);
+        
     }
     // Need to sort the by id
 
@@ -248,7 +249,7 @@ int main(){
     int choice;
     printf("Please choose which fuction you would like to use:\n1: Computing Pi\n2: Computing Square\n3: Displaying Primes\n4: Processing Grades\n5: Computing tax\n6: Solving Quadratic\n7: Computing Sum Square\n8: Counting Files\n9: Sorting Files\n10: Student Files\n11: Quit\n");
     scanf("%d",choice);
-    while(choice != 1){
+    while(choice != 11){
         if (choice == 1){
             int n;
             double sqr;
