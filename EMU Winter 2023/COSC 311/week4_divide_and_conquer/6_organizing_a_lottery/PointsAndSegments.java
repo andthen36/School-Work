@@ -1,24 +1,56 @@
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class PointsAndSegments {
 
+    private static class Pair{
+        int x;
+        char pos;
+        public Pair(int x, char pos){
+            this.x = x;
+            this.pos = pos;
+        }
+    }
     private static int[] fastCountSegments(int[] starts, int[] ends, int[] points) {
         int[] cnt = new int[points.length];
-        //write your code here
-        return cnt;
-    }
+        int total = starts.length + ends.length + points.length;
+        Pair[] pairs  = new Pair[total];
+            Map<Integer, Integer> frequency = new HashMap<Integer, Integer>();
 
-    private static int[] naiveCountSegments(int[] starts, int[] ends, int[] points) {
-        int[] cnt = new int[points.length];
-        for (int i = 0; i < points.length; i++) {
-            for (int j = 0; j < starts.length; j++) {
-                if (starts[j] <= points[i] && points[i] <= ends[j]) {
-                    cnt[i]++;
+        int i, k;
+        for(i = 0, k = 0; i < starts.length; i++){
+            pairs[k++] = new Pair(starts[i], 'l');
+            pairs[k++] = new Pair(ends[i], 'r');
+        }
+
+        for(i = 0; i < points.length; i++){
+            pairs[k++] = new Pair(points[i], 'p');
+        }
+        Array.sort(pairs, new Comparator<Pair>() {
+            public int compare(Pair p1, Pair p2){
+                if(p1.x < p2.x) return -1;
+                if (p1.x > p2.x) return +1;
+                else{
+                    if(p1.pos < p2.pos) return -1;
+                    if (p1.pos > p2.pos) return +1;
+                    else return 0;
                 }
             }
+        });
+        int count = 0;
+        for(Pair pair : pairs){
+            if(pair.pos == 'l') count++;
+            else if (pair.pos == 'r') count--;
+            else frequency.put(pairs.x, count);
+        }
+        for ( i = 0; i< points.length; i++){
+            cnt[i]+= frequency.get(points[i]);
         }
         return cnt;
     }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -36,7 +68,7 @@ public class PointsAndSegments {
             points[i] = scanner.nextInt();
         }
         //use fastCountSegments
-        int[] cnt = naiveCountSegments(starts, ends, points);
+        int[] cnt = fastCountSegments(starts, ends, points);
         for (int x : cnt) {
             System.out.print(x + " ");
         }
