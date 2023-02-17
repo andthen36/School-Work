@@ -3,7 +3,7 @@ import java.io.*;
 
 public class MajorityElement {
     private static int getMajorityElement(int[] a, int left, int right) {
-       if (right < left) return a[left];
+       if (right <= left) return a[left];
        int mid = left + (right - left) / 2;
        int lElement = getMajorityElement(a, left, mid);
        int rElement = getMajorityElement(a, mid + 1, right);
@@ -18,11 +18,7 @@ public class MajorityElement {
 
        return -1;
     }
-    private static int getMajorityElement(int[] a){
-        int ans  = -1;
-        ans = getMajorityElement(a, 0, a.length - 1);
-        return ans;
-    }
+
     private static int frequency(int[] a, int element, int left, int right){
         int cnt = 0;
         for (int i = left; i <= right; i++){
@@ -31,6 +27,13 @@ public class MajorityElement {
         return cnt;
     }
 
+    private static int getMajorityElement(int[] a){
+        int ans  = -1;
+        ans = getMajorityElement(a, 0, a.length - 1);
+        return ans;
+    }
+    
+
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner(System.in);
         int n = scanner.nextInt();
@@ -38,7 +41,7 @@ public class MajorityElement {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        if (getMajorityElement(a, 0, a.length) != -1) {
+        if (getMajorityElement(a) != -1) {
             System.out.println(1);
         } else {
             System.out.println(0);
