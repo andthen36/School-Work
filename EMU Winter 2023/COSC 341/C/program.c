@@ -3,12 +3,11 @@
 #include <ctype.h>
 
 int compute_pi(int n){
-    int i = 0;
-    int bool = 0;
-    int ph = 5;
-    double pi = 0.6666;
-    while (i<n){
-        printf("%f , i = %d ||", pi, i );
+    int i = 1; //setting i as 1 so if the user only puts in one the whiel loop will notice and only print out pi as 1
+    int bool = 1;
+    int ph = 3;
+    double pi = 1;
+    while (i<n){ ///while i is less the n the loop will continue
         if(bool == 0){
             pi = (pi + (1/ph));
             ph = ph + 2;
@@ -35,7 +34,6 @@ double compute_sqrt(double x){
      return 1;
     }  
     for(i = 0; i<10; i++){
-        
         next = (0.5)*(last + x / last);
         last = next;
         
@@ -257,7 +255,6 @@ int main(){
             printf("Enter in a number you would like to square");
             scanf("%d",n);
             sqr = compute_pi(n);
-            printf("The pi of %d is; %f", n, sqr);
         }
 
     

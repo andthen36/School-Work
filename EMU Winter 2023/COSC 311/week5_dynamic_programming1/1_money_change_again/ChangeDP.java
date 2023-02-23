@@ -6,9 +6,9 @@ public class ChangeDP {
         int[] minCoins = new int [m  + 1];
 
         for(int i = 1; i <= m; i++){
-            minCoins[m] = Integer.MAX_VALUE;
+            minCoins[i] = Integer.MAX_VALUE;
             for (int j = 0; j < coins.length; j++){
-                if(i >= coin[j]){
+                if(i >= coins[j]){
                     int numCoins  = minCoins[i - coins[j]] + 1;
                     minCoins[i] = Math.min(minCoins[i], numCoins);
                 }
