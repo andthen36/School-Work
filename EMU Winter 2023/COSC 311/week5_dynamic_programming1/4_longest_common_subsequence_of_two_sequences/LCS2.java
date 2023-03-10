@@ -3,7 +3,7 @@ import java.io.*;
 
 public class LCS2 {
 
-    private static int[][] table(int[] a, int[] b) {
+    private static int[][] table(int[] a, int[] b) { 
         int m = a.length;
         int n = b.length;
         int i;
