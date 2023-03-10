@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 class Request {
@@ -25,16 +27,32 @@ class Response {
 class Buffer {
     public Buffer(int size) {
         this.size_ = size;
-        this.finish_time_ = new ArrayList<Integer>();
+        this.queue = new LinkedList<Integer>();
+        this.finish_time_ = 0;
     }
 
     public Response Process(Request request) {
-        // write your code here
-        return new Response(false, -1);
+        while(queue.size() > 0 && queue.peekFirst() <= request.arrival_time){
+            queue.removeFirst();
+        }
+        if (queue.size() >= size_){ //if the buffer is full
+            return new Response(true, -1);
+        }
+        if(queue.size() <= 0){ // if the buffer is empty
+            finish_time_ += request.process_time;
+            queue.add(finish_time_);
+            return new Response(false, request.arrival_time);
+        }
+        finish_time_ = queue.peekLast();
+        Response r = new Response(false, finish_time_);
+        finish_time_ += request.process_time;
+        queue.addLast(finish_time_);
+        return r;
     }
 
     private int size_;
-    private ArrayList<Integer> finish_time_;
+    private Deque<Integer> queue;
+    private int finish_time_;
 }
 
 class process_packages {
