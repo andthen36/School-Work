@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class JobQueue {
@@ -30,21 +31,38 @@ public class JobQueue {
         }
     }
 
+    private class Worker implements Comparable<Worker>{
+        int index;
+        long processing;
+
+        public Worker(int index, long processing){
+            this.index = index;
+            this.processing = processing;
+        }
+       
+        public int compareTo(Worker that) {
+            if(this.processing < that.processing) return -1;
+            if(this.processing > that.processing) return +1;
+
+            return this.index - that.index;
+
+        }
+        
+    }
+
     private void assignJobs() {
-        // TODO: replace this code with a faster algorithm.
         assignedWorker = new int[jobs.length];
         startTime = new long[jobs.length];
-        long[] nextFreeTime = new long[numWorkers];
+        PriorityQueue<Worker> queue = new PriorityQueue<Worker>();
+        for (int i = 0; i < numWorkers; i++){
+            queue.offer(new Worker(i, 0));
+        }
         for (int i = 0; i < jobs.length; i++) {
             int duration = jobs[i];
-            int bestWorker = 0;
-            for (int j = 0; j < numWorkers; ++j) {
-                if (nextFreeTime[j] < nextFreeTime[bestWorker])
-                    bestWorker = j;
-            }
-            assignedWorker[i] = bestWorker;
-            startTime[i] = nextFreeTime[bestWorker];
-            nextFreeTime[bestWorker] += duration;
+            Worker bestWorker = queue.poll();
+            assignedWorker[i] = bestWorker.index;
+            startTime[i] = bestWorker.processing;
+            queue.offer(new Worker(bestWorker.index, bestWorker.processing + duration));
         }
     }
 
