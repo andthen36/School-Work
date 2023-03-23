@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 public class BuildHeap {
     private int[] data;
     private List<Swap> swaps;
-
+    private int N;
     private FastScanner in;
     private PrintWriter out;
 
@@ -17,6 +17,7 @@ public class BuildHeap {
 
     private void readData() throws IOException {
         int n = in.nextInt();
+        this.N = n;
         data = new int[n];
         for (int i = 0; i < n; ++i) {
           data[i] = in.nextInt();
@@ -32,23 +33,26 @@ public class BuildHeap {
 
     private void generateSwaps() {
       swaps = new ArrayList<Swap>();
-      // The following naive implementation just sorts 
-      // the given sequence using selection sort algorithm
-      // and saves the resulting sequence of swaps.
-      // This turns the given array into a heap, 
-      // but in the worst case gives a quadratic number of swaps.
-      //
-      // TODO: replace by a more efficient implementation
-      for (int i = 0; i < data.length; ++i) {
-        for (int j = i + 1; j < data.length; ++j) {
-          if (data[i] > data[j]) {
-            swaps.add(new Swap(i, j));
-            int tmp = data[i];
-            data[i] = data[j];
-            data[j] = tmp;
-          }
-        }
+      for(int k = N / 2; k >= 0; k--){
+        shiftDown(k);
       }
+    }
+
+    private void shiftDown(int k) {
+        while (2 * k + 1 < N){
+          int j = 2 * k +1;
+          if(j < N - 1 && data[j] > data[j +1]) j++;
+          if(data[k] <= data[j]) break;
+          exchange(k, j);
+          k = j;
+        }
+    }
+
+    private void exchange(int k, int j) {
+      swaps.add(new Swap(k, j));
+      int temp = data[k];
+      data[k] = data[j];
+      data[j] = temp;
     }
 
     public void solve() throws IOException {
