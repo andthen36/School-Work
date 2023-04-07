@@ -27,32 +27,24 @@ class Response {
 class Buffer {
     public Buffer(int size) {
         this.size_ = size;
+        this.finish_time_ = new ArrayList<Integer>();
         this.queue = new LinkedList<Integer>();
-        this.finish_time_ = 0;
     }
 
     public Response Process(Request request) {
-        while(queue.size() > 0 && queue.peekFirst() <= request.arrival_time){
+       while (queue.size() > 0 && queue.peekFirst() <= request.arrival_time){
             queue.removeFirst();
-        }
-        if (queue.size() >= size_){ //if the buffer is full
-            return new Response(true, -1);
-        }
-        if(queue.size() <= 0){ // if the buffer is empty
-            finish_time_ += request.process_time;
-            queue.add(finish_time_);
-            return new Response(false, request.arrival_time);
-        }
-        finish_time_ = queue.peekLast();
-        Response r = new Response(false, finish_time_);
-        finish_time_ += request.process_time;
-        queue.addLast(finish_time_);
-        return r;
+       }
+       if(queue.size() >= size_){
+            return
+       }
+
+       }
     }
 
     private int size_;
     private Deque<Integer> queue;
-    private int finish_time_;
+    private ArrayList<Integer> finish_time_;
 }
 
 class process_packages {

@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -9,7 +10,7 @@ public class HashChains {
     private FastScanner in;
     private PrintWriter out;
     // store all strings in one list
-    private List<String> elems;
+    private LinkedList<String>[] elems;
     // for hash function
     private int bucketCount;
     private int prime = 1000000007;
@@ -44,22 +45,27 @@ public class HashChains {
     }
 
     private void processQuery(Query query) {
+        int h = query.type.equals("check") ? query.ind : hashFunc(query.s);
+        if (elems[h] == null) elems[h] = new LinkedList<>();
         switch (query.type) {
             case "add":
-                if (!elems.contains(query.s))
-                    elems.add(0, query.s);
+                if (!elems[h].contains(query.s))
+                    elems[h].addFirst(query.s);
                 break;
             case "del":
-                if (elems.contains(query.s))
-                    elems.remove(query.s);
+                if (elems[h].contains(query.s))
+                    elems[h].remove(query.s);
                 break;
             case "find":
-                writeSearchResult(elems.contains(query.s));
+                if(elems[h].contains(query.s))
+                    writeSearchResult(true);
+                else
+                    writeSearchResult(false);
                 break;
             case "check":
-                for (String cur : elems)
-                    if (hashFunc(cur) == query.ind)
-                        out.print(cur + " ");
+            int inx = query.ind;
+                for (String cur : elems[inx])
+                    out.print(cur + " ");
                 out.println();
                 // Uncomment the following if you want to play with the program interactively.
                 // out.flush();
@@ -70,7 +76,7 @@ public class HashChains {
     }
 
     public void processQueries() throws IOException {
-        elems = new ArrayList<>();
+        elems = new LinkedList[bucketCount];
         in = new FastScanner();
         out = new PrintWriter(new BufferedOutputStream(System.out));
         bucketCount = in.nextInt();

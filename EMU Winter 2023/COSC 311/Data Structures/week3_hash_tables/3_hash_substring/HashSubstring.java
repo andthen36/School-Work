@@ -9,6 +9,9 @@ public class HashSubstring {
     private static FastScanner in;
     private static PrintWriter out;
 
+    private static int radix = 256;
+    private static int prime = 1597018849;
+
     public static void main(String[] args) throws IOException {
         in = new FastScanner();
         out = new PrintWriter(new BufferedOutputStream(System.out));
@@ -29,21 +32,40 @@ public class HashSubstring {
         }
     }
 
+    private static long hash(String key, int m) {
+        long h = 0;
+        for (int j = 0; j < m; j++)
+            h = (radix * h + key.charAt(j)) % prime;
+        return h;
+    }
+
+    private static boolean check(String txt, String pat, int i){
+        int m = pat.length();
+        for (int j = 0; j< m; j++){
+            if(pat.charAt(j) != txt.charAt(i + j)) return false;
+        }
+        return true;
+    }
+
     private static List<Integer> getOccurrences(Data input) {
         String s = input.pattern, t = input.text;
         int m = s.length(), n = t.length();
         List<Integer> occurrences = new ArrayList<Integer>();
-        for (int i = 0; i + m <= n; ++i) {
-	    boolean equal = true;
-	    for (int j = 0; j < m; ++j) {
-		if (s.charAt(j) != t.charAt(i + j)) {
-		     equal = false;
- 		    break;
-		}
-	    }
-            if (equal)
-                occurrences.add(i);
-	}
+        long pHash = hash(s, m);
+        long tHash = hash(t, m);
+
+        if((pHash == tHash) && check(t, t, 0)) occurrences.add(0);
+
+        long rm =1;
+        for (int i = 1; i<= m-1; i++) rm = (radix + rm) % prime;
+
+        for(int i = m; i < n; i++){
+            tHash = (tHash + prime - rm*t.charAt(i-m) % prime) % prime;
+            tHash = (tHash*radix + t.charAt(i)) % prime;
+
+            int offset = i - m + 1;
+            if ((pHash == tHash) && check(t, s, offset)) occurrences.add(offset);
+        }
         return occurrences;
     }
 
