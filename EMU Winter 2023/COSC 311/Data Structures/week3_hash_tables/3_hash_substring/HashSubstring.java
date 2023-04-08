@@ -10,7 +10,7 @@ public class HashSubstring {
     private static PrintWriter out;
 
     private static int radix = 256;
-    private static int prime = 1597018849;
+    private static long prime = 1597018849L;
 
     public static void main(String[] args) throws IOException {
         in = new FastScanner();
@@ -54,10 +54,10 @@ public class HashSubstring {
         long pHash = hash(s, m);
         long tHash = hash(t, m);
 
-        if((pHash == tHash) && check(t, t, 0)) occurrences.add(0);
+        if((pHash == tHash) && check(t, s, 0)) occurrences.add(0);
 
         long rm =1;
-        for (int i = 1; i<= m-1; i++) rm = (radix + rm) % prime;
+        for (int i = 1; i<= m-1; i++) rm = (radix * rm) % prime;
 
         for(int i = m; i < n; i++){
             tHash = (tHash + prime - rm*t.charAt(i-m) % prime) % prime;

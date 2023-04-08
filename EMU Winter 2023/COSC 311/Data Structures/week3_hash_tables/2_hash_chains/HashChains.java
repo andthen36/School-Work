@@ -41,7 +41,7 @@ public class HashChains {
     private void writeSearchResult(boolean wasFound) {
         out.println(wasFound ? "yes" : "no");
         // Uncomment the following if you want to play with the program interactively.
-        // out.flush();
+         out.flush();
     }
 
     private void processQuery(Query query) {
@@ -68,7 +68,7 @@ public class HashChains {
                     out.print(cur + " ");
                 out.println();
                 // Uncomment the following if you want to play with the program interactively.
-                // out.flush();
+                out.flush();
                 break;
             default:
                 throw new RuntimeException("Unknown query: " + query.type);
@@ -76,10 +76,10 @@ public class HashChains {
     }
 
     public void processQueries() throws IOException {
-        elems = new LinkedList[bucketCount];
         in = new FastScanner();
         out = new PrintWriter(new BufferedOutputStream(System.out));
         bucketCount = in.nextInt();
+        elems = new LinkedList[bucketCount];
         int queryCount = in.nextInt();
         for (int i = 0; i < queryCount; ++i) {
             processQuery(readQuery());
