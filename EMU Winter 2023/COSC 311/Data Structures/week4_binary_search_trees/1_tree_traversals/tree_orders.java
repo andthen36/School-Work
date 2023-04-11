@@ -40,26 +40,83 @@ public class tree_orders {
 
 		List<Integer> inOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
-                        // Finish the implementation
-                        // You may need to add a new recursive method to do that
-                        
+			inOrderIter(0, result);
 			return result;
 		}
 
 		List<Integer> preOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
-                        // Finish the implementation
-                        // You may need to add a new recursive method to do that
+			preOrderIter(0 ,result);
                         
 			return result;
 		}
 
 		List<Integer> postOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
-                        // Finish the implementation
-                        // You may need to add a new recursive method to do that
-                        
+			postOrderIter(0 ,result);       
 			return result;
+		}
+
+		void inOrder(int root, List<Integer> result){
+			if(root < 0) return;
+			inOrder(left[root], result);
+			result.add(key[root]);
+			inOrder(right[root], result);
+		}
+
+		void inOrderIter(int root, List<Integer> result){
+			if (root < 0) return;
+			Stack<Integer> stack = new Stack<>();
+			int curr = root;
+			while (curr >= 0 || !stack.isEmpty()){
+				while(curr >= 0){
+					stack.push(curr);
+					curr = left[curr];
+				}
+				curr = stack.pop();
+				result.add(key[curr]);
+				curr = right[curr];
+			}
+		}
+
+		void preOrder(int root, List<Integer> result){
+			if(root < 0) return;
+			result.add(key[root]);
+			preOrder(left[root], result);
+			preOrder(right[root], result);
+		}
+
+		void preOrderIter(int root, List<Integer> result){
+			if(root < 0) return;
+			Stack<Integer> stack = new Stack<>();
+			stack.push(root);
+			while (!stack.isEmpty()){
+				int pop = stack.pop();
+				result.add(key[pop]);
+				if (left[pop] >= 0) stack.push(left[pop]);
+				if (right[pop] >= 0) stack.push(right[pop]);
+			}
+
+		}
+
+		void postOrder(int root, List<Integer> result){
+			if (root < 0) return;
+			postOrder(left[root], result);
+			postOrder(right[root], result);
+			result.add(key[root]);
+		}
+
+		void postOrderIter(int root, List<Integer> result) {
+			if (root < 0) return;
+			Stack<Integer> stack = new Stack<>();
+			stack.push(root);
+			while(!stack.isEmpty()){
+				int pop = stack.pop();
+				result.add(key[pop]);
+				if (left[pop] >= 0) stack.push(left[pop]);
+				if (right[pop] >= 0) stack.push(right[pop]);
+			}
+			Collections.reverse(result);	
 		}
 	}
 

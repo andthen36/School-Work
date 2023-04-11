@@ -9,8 +9,8 @@ public class HashSubstring {
     private static FastScanner in;
     private static PrintWriter out;
 
-    private static int radix = 256;
-    private static long prime = 1597018849L;
+    private static int radix = 263;
+    private static long prime = 1000000007;
 
     public static void main(String[] args) throws IOException {
         in = new FastScanner();
@@ -34,8 +34,8 @@ public class HashSubstring {
 
     private static long hash(String key, int m) {
         long h = 0;
-        for (int j = 0; j < m; j++)
-            h = (radix * h + key.charAt(j)) % prime;
+        for (int i = 0; i < m; i++)
+            h = (radix * h + key.charAt(i)) % prime;
         return h;
     }
 

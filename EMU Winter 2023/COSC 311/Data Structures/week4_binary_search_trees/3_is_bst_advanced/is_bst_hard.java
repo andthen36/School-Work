@@ -45,9 +45,22 @@ public class is_bst_hard {
             }
         }
 
+        boolean solve(){
+            return isBinarySearchTree();
+        }
+
         boolean isBinarySearchTree() {
-          // Implement correct algorithm here
-          return true;
+            if(nodes == 0) return true;
+            return checkBST(0, null, null);
+        }
+
+        boolean checkBST(int root, Integer lower, Integer upper) {
+            if (root < 0) return true;
+            if(upper != null && tree[root].key >= tree[upper].key)
+                return false;
+            if(lower != null && tree[root].key < tree[lower].key)
+                return false;
+            return checkBST(tree[root].left, lower, root) && checkBST(tree[root].right, root, upper);
         }
     }
 

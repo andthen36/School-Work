@@ -45,9 +45,17 @@ public class is_bst {
             }
         }
 
-        boolean isBinarySearchTree() {
-          // Implement correct algorithm here
-          return true;
+        boolean solve(){
+            if(nodes == 0) return true;
+            return isBinarySearchTree(0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        }
+
+        boolean isBinarySearchTree(int x, int minLimit, int maxLimit) {
+            if(x < 0) return true;
+            if (tree[x].key > maxLimit || tree[x].key < minLimit) return false;
+
+            return isBinarySearchTree(tree[x].left, minLimit, tree[x].key -1) 
+            && isBinarySearchTree(tree[x].right, tree[x].key + 1, maxLimit);
         }
     }
 
