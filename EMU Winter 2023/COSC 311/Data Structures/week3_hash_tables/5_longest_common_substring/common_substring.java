@@ -1,6 +1,8 @@
 import java.util.*;
 import java.io.*;
 
+
+
 public class common_substring {
     public class Answer {
         int i, j, len;
