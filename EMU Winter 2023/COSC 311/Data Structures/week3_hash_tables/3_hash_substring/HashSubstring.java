@@ -39,6 +39,7 @@ public class HashSubstring {
         return h;
     }
 
+
     private static boolean check(String txt, String pat, int i){
         int m = pat.length();
         for (int j = 0; j< m; j++){
