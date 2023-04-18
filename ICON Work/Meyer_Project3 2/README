@@ -1,0 +1,13 @@
+The program should just run by copying and pasting it into the assembly.
+
+It begins at x3000 and immeditaly ask user to enter a string of numbers.
+
+LOOP_COUNT: everytime the user hits a number it will run through this loop and be checked by IS_INT to make sure if it is a decimal, if not it will pull a error, if it is then it would be sent to DtoA.
+
+All even numbers are devided and put into R3, the odds are put in R4.
+
+DtoA is converting the decimal to ASCII for when they are printed out
+
+Print just prints aout the end resualts of whats been counted.
+
+PROBLEMS: MY code has some issues, manly that the error handler is not working correctly when a letter is put in instead of a decimal. 

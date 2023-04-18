@@ -1,0 +1,88 @@
+[Project 3 - Evan Meyer COSC221]
+
+.orig x3000
+
+  LEA R0, PROMPT;
+  PUTS;
+  LD R1, negASCIIZERO;
+  LD R2, negASCIIZNINE;
+
+LOOP_COUNT 
+	GETC; 'Gets user input'
+    OUT; 'Prints whatever the user types'
+    	
+        IS_INT 
+            AND R5, R5, B0;
+            ADD R5, R0, R1;
+
+            BRn ERROR_HANDLER;
+
+            AND R5, R4, B0;
+            ADD R5, R0, R2;
+            BRp ERROR_HANDLER;
+
+            AND R0, R0, B1111;
+            BRz DtoA;
+            AND R0, R0, B1;'Loop to check if input is a decimal. If not it will read a error. If it is it is converted into ASCII'
+
+BRz CountEven;
+
+CountOdd
+	ADD R3, R3, #1;
+	BRnzp LOOP_COUNT; 'Loop that counts all odd numbers'
+
+CountEven
+	ADD R4, R4, #1;
+	BRnzp LOOP_COUNT; 'Loop that counts all even numbers'
+   
+
+ERROR_HANDLER
+        LD R0, NEWLINE;
+        OUT;
+        LD R0, ErrorMsg;
+        PUTS;
+        LD R0, NEWLINE;
+        OUT;
+        AND R3, R3 #0;
+        AND R4, R4, #0;
+        BRnzp LOOP_COUNT; 'Error handler if user doesnt type a decimal'
+
+
+DtoA
+        ADD R4, R4, #1
+        LD R5, posASCIIZERO;
+        ADD R3, R3, R5;
+        ST R3, ODD_PRINT;
+        ADD R4, R4, R5;
+        ST R4, EVEN_PRINT; 'Converter to change decimals to ascii to be printed out'
+
+PRINT 
+    LD R0, NEWLINE
+        OUT;
+        LEA R0, EVEN_NUM;
+        PUTS;
+        LD R0, EVEN_PRINT;
+        OUT;
+        LD R0, NEWLINE;
+        OUT;
+
+        LEA R0, ODD_NUM;
+        PUTS;
+        LD R0, ODD_PRINT;
+        OUT; ' Print loop to show user the cound amount'
+
+DONE HALT
+
+
+negASCIIZNINE .fill #-57
+ODD_PRINT .FILL x0;
+EVEN_PRINT .FILL x0;
+ErrorMsg .STRINGZ "Not a digit. Try again..."
+NEWLINE .FILL x0A;
+negASCIIZERO .FILL #-48
+posASCIIZERO .FILL #48
+PROMPT .STRINGZ "PLEASE ENTER DIGITS ONLY (Terminate input with a 0 at the end):"
+EVEN_NUM .STRINGZ "Number of even digits: ";
+ODD_NUM .STRINGZ "Number of odd digits: "
+
+.END

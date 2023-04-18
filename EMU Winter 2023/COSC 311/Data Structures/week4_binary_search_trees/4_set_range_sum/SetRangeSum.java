@@ -186,14 +186,59 @@ public class SetRangeSum {
         root = merge(merge(left, new_vertex), right);
     }
 
-    void erase(int x) {
-        // Implement erase yourself
+    private Vertex delete(int x, Vertex root){
+        if(root == null) return root;
+        if(x < root.key) root.left = delete(x, root.left);
+        else if (x > root.key) root.right = delete(x, root.right);
+        else if (root.left == null) return root.right;
+        else if (root.right == null) return root.left;
+        else{
+            Vertex next = next(root);
+            assert(next.left == null);
+            root.key = next.key;
+            promote(next.right, next);
+        }
+        return root;
+    }
 
+    void erase(int x) {
+        VertexPair pair = find(root, x);
+        root = pair.right;
+        root = delete(x, root);
+        if (root != null) root.parent = null;
+    }
+
+    private Vertex next(Vertex node){
+        if(node == null) return null;
+        if(node.right != null){
+            node = node.right;
+            while(node.left != null) node = node.left;
+            return node;
+        }
+        Vertex parent = node.parent;
+        while(parent != null && parent.key <= node.key)
+            parent = parent.parent;
+        return parent;
+    }
+
+    private void promote(Vertex child, Vertex node){
+        assert(node.parent != null);
+        if (child != null) child.parent = node.parent;
+        if (node == node.parent.left) node.parent.left = child;
+        else node.parent.right = child;
+        update(node.parent);
+        node.parent = null;
     }
 
     boolean find(int x) {
-        // Implement find yourself
-
+        if (root == null) return false;
+        Vertex node = root;
+        while (node != null){
+            if(node.key == x) return true;
+            else if(x < node.key) node = node.left;
+            else node = node.right;
+        }
+        splay(node);
         return false;
     }
 
