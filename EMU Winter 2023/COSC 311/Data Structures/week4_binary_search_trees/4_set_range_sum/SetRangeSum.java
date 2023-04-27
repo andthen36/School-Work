@@ -184,6 +184,7 @@ public class SetRangeSum {
             new_vertex = new Vertex(x, x, null, null, null);
         }
         root = merge(merge(left, new_vertex), right);
+       
     }
 
     private Vertex delete(int x, Vertex root){
@@ -206,6 +207,7 @@ public class SetRangeSum {
         root = pair.right;
         root = delete(x, root);
         if (root != null) root.parent = null;
+        
     }
 
     private Vertex next(Vertex node){
@@ -248,10 +250,16 @@ public class SetRangeSum {
         Vertex middle = leftMiddle.right;
         VertexPair middleRight = split(middle, to + 1);
         middle = middleRight.left;
+        Vertex tmp = middle;
         Vertex right = middleRight.right;
         long ans = 0;
-        // Complete the implementation of sum
-
+        while(middle != null && middle.left != null)
+            middle = middle.left;
+        while (middle != null && middle . key <= to){
+            if(middle.key >= from) ans += middle.key;
+            middle = next(middle);
+        }
+        root = merge(merge(left, tmp), right);
         return ans;
     }
 
